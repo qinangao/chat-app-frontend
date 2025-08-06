@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import {
   Eye,
@@ -10,14 +10,12 @@ import {
   User,
 } from "lucide-react";
 import AuthImagePattern from "../components/AuthImagePattern";
-import { useNavigate, useSearchParams } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import { validateForm } from "../lib/utils";
 
 function AuthPage() {
   const [searchParams] = useSearchParams();
-  const initialMode = searchParams.get("mode") !== "signup";
-
-  const [isLogin, setIsLogin] = useState(initialMode);
+  const isLogin = searchParams.get("mode") !== "signup";
   const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -26,7 +24,7 @@ function AuthPage() {
     password: "",
   });
 
-  const { signup, login, isSigningUp, isLoggingIn } = useAuthStore();
+  const { signup, login, isSigningUp, isLoggingIn, authUser } = useAuthStore();
   const navigate = useNavigate();
 
   function handleSubmit(e) {
@@ -38,6 +36,12 @@ function AuthPage() {
       if (success) signup(formData);
     }
   }
+
+  useEffect(() => {
+    if (authUser) {
+      navigate("/");
+    }
+  }, [authUser, navigate]);
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
@@ -157,17 +161,12 @@ function AuthPage() {
           <div className="text-center">
             <p className="text-base-content/60">
               {isLogin ? "Don’t have an account?" : "Already have an account?"}{" "}
-              <button
-                type="button"
-                onClick={() => {
-                  const newMode = isLogin ? "signup" : "login";
-                  navigate(`/auth?mode=${newMode}`);
-                  setIsLogin(!isLogin);
-                }}
+              <Link
+                to={`/auth?mode=${isLogin ? "signup" : "login"}`}
                 className="link link-primary"
               >
                 {isLogin ? "Create account" : "Sign in"}
-              </button>
+              </Link>
             </p>
           </div>
         </div>
