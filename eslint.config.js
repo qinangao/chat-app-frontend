@@ -36,6 +36,7 @@ export default [
 
       // Modern React doesn't need React import
       "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
     },
   },
 ];
