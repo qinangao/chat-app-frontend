@@ -43,6 +43,14 @@ function AuthPage() {
     }
   }, [authUser, navigate]);
 
+  useEffect(() => {
+    setFormData({
+      fullName: "",
+      email: "",
+      password: "",
+    });
+  }, [isLogin]);
+
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* Left Side - Form */}
