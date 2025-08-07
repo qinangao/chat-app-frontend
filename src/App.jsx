@@ -1,8 +1,6 @@
 import { Navigate, Route, Routes } from "react-router";
 import NavBar from "./components/NavBar";
 import HomePage from "./pages/HomePage ";
-import SignupPage from "./pages/SignupPage";
-import LoginPage from "./pages/LoginPage";
 import SettingPage from "./pages/SettingPage ";
 import ProfilePage from "./pages/ProfilePage";
 import { useAuthStore } from "./store/useAuthStore";
@@ -10,9 +8,11 @@ import { useEffect } from "react";
 import { Loader } from "lucide-react";
 import { Toaster } from "react-hot-toast";
 import AuthPage from "./pages/AuthPage";
+import { useThemeStore } from "./store/useThemeStore";
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { theme } = useThemeStore();
 
   useEffect(() => {
     checkAuth();
@@ -29,7 +29,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div data-theme={theme}>
       <NavBar />
       <Routes>
         <Route
