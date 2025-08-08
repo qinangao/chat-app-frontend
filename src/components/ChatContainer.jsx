@@ -58,7 +58,7 @@ function ChatContainer() {
               className={`chat-bubble ${
                 message.senderId === authUser._id
                   ? "chat-end chat-bubble-primary"
-                  : "chat-start chat-bubble-secondary"
+                  : "chat-start  bg-base-200"
               }`}
             >
               {message.image && (
