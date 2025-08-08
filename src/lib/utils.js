@@ -1,4 +1,5 @@
 import toast from "react-hot-toast";
+import { format, isToday, isYesterday } from "date-fns";
 
 export function validateForm(formData) {
   if (!formData.fullName.trim()) {
@@ -30,4 +31,11 @@ export function formatMessageTime(date) {
     minute: "2-digit",
     hour12: false,
   });
+}
+
+export function getMessageDateLabel(date) {
+  const d = new Date(date);
+  if (isToday(d)) return "Today";
+  if (isYesterday(d)) return "Yesterday";
+  return format(d, "MMM dd, yyyy");
 }
