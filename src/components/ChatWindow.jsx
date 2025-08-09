@@ -8,14 +8,11 @@ function ChatWindow() {
   const { authUser } = useAuthStore();
   const messagesEndRef = useRef(null);
 
-  // Auto-scroll to bottom when new messages arrive
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
   // Auto-scroll when messages change
   useEffect(() => {
-    scrollToBottom();
+    if (messagesEndRef.current && messages) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages]);
 
   function getGroupedMessages() {
@@ -40,7 +37,7 @@ function ChatWindow() {
   return (
     <div className="flex-1 overflow-y-auto p-4 space-y-4">
       {groupedMessages.length === 0 ? (
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex items-center justify-center mt-[250px]">
           <p className="text-center text-base-content/60">
             No messages yet. Start the conversation!
           </p>
@@ -63,7 +60,7 @@ function ChatWindow() {
                   message.senderId === authUser._id ? "chat-end " : "chat-start"
                 }`}
               >
-                <div className="chat-image avatar">
+                <div className="chat-image avatar ">
                   <div className="size-10 rounded-full border">
                     <img
                       src={
@@ -83,10 +80,10 @@ function ChatWindow() {
                 </div>
 
                 <div
-                  className={`chat-bubble  text-primary-content ${
+                  className={`chat-bubble  ${
                     message.senderId === authUser._id
                       ? "chat-end chat-bubble-primary"
-                      : "chat-start  bg-base-200"
+                      : "chat-start  bg-base-200 text-base-content"
                   }`}
                 >
                   {message.image && (
