@@ -4,7 +4,7 @@ Chatter is a modern, real-time chat application built with React, Zustand, Socke
 
 ## Features
 
-- Authentication && Authorization with JWT
+- Authentication && Authorization with JWT (signup, login, logout)
 - Real-time messaging with Socket.IO
 - Online user status
 - Profile management with avatar upload
