@@ -6,13 +6,25 @@ import MessageSkeleton from "./skeletons/MessageSkeleton";
 import ChatWindow from "./ChatWindow";
 
 function ChatContainer() {
-  const { isMessagesLoading, getMessages, selectedUser } = useChatStore();
+  const {
+    isMessagesLoading,
+    getMessages,
+    selectedUser,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+  } = useChatStore();
 
   useEffect(() => {
-    if (selectedUser?._id) {
-      getMessages(selectedUser._id);
-    }
-  }, [selectedUser?._id, getMessages]);
+    getMessages(selectedUser._id);
+    subscribeToMessages();
+
+    return () => unsubscribeFromMessages();
+  }, [
+    selectedUser?._id,
+    getMessages,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+  ]);
 
   if (isMessagesLoading) {
     return (
